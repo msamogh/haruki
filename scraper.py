@@ -8,9 +8,9 @@ class Scraper:
 
 	memo = {}
 
-	def __init__(self, name, html, memoize=True):
+	def __init__(self, name, driver, memoize=False):
 		self.name = name
-		self.html = html
+		self.driver = driver
 		self.memoize = memoize
 
 	@staticmethod
@@ -31,7 +31,7 @@ class Scraper:
 						return dict((x, y) for x, y in memo[hash(tuple(sorted(paths.items())))])
 
 				# Retrieve nodes at paths
-				html = etree.HTML(self.html)
+				html = etree.HTML(self.driver.page_source)
 				target_nodes = {path: html.find(paths[path]) for path in paths}
 
 				if attr:
